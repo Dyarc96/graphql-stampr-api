@@ -1,17 +1,14 @@
 import mongoose, { Schema } from 'mongoose';
 import { composeMongoose } from 'graphql-compose-mongoose';
 
-const OrgSchema = new Schema({
-    id: String,
-    name: String,
+const LocalSchema = new Schema({
+    _id: String,
     address: {
         address1: String,
         address2: String,
         city: String,
         zip: String
     },
-    type: String,
-    numOfStamps: Number,
     linkedProviders: [{
         id: String,
         isHead: String,
@@ -25,23 +22,34 @@ const OrgSchema = new Schema({
         lastName: String,
         email: String
     }],
-    linkedUsers: [
-        {
-            id: String,
-            stamps: Number,
-            firstName: String,
-            lastName: String,
-            visits: Number,
-            lastVisit: Date
-        }
-    ]
+    linkedUsers: [{
+        id: String,
+        stamps: Number,
+        firstName: String,
+        lastName: String,
+        visits: Number,
+        lastVisit: Date
+    }]
+});
+
+const OrgSchema = new Schema({
+    id: String,
+    name: String,
+    locals: [LocalSchema],
+    type: String,
+    numOfStamps: Number,
+    head: String
 });
 
 const customizationOptions = {};
 
 export const Org = mongoose.model('Org', OrgSchema);
 
+export const Local = mongoose.model('Local', LocalSchema);
+
 export const OrgTC = composeMongoose(Org, customizationOptions);
+
+export const LocalTC = composeMongoose(Local, customizationOptions);
 
 export const orgQuery = {
     orgById: OrgTC.mongooseResolvers.findById(),
@@ -51,6 +59,15 @@ export const orgQuery = {
     orgCount: OrgTC.mongooseResolvers.count(),
     orgConnection: OrgTC.mongooseResolvers.connection(),
     orgPagination: OrgTC.mongooseResolvers.pagination(),
+}
+
+export const localQuery = {
+    localbyId: LocalTC.mongooseResolvers.findById(),
+    localCount: LocalTC.mongooseResolvers.count(),
+}
+
+export const localMutation = {
+    localCreateOne: LocalTC.mongooseResolvers.createOne()
 }
 
 export const orgMutation = {
