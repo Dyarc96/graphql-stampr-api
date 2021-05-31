@@ -36,4 +36,4 @@ export const userMutation = {
         userUpdateMany: UserTC.mongooseResolvers.updateMany(),
         userRemoveById: UserTC.mongooseResolvers.removeById(),
         userRemoveOne: UserTC.mongooseResolvers.removeOne(),
-}
+};
