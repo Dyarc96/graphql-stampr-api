@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import { ApolloServer } from 'apollo-server-express';
 
 import graphQlSchema from './models/schemas';
-import keys from './keys/dev';
 
 const server = (async () => {
     const app = express();
@@ -15,7 +14,7 @@ const server = (async () => {
     server.applyMiddleware({ app });
 
     try {
-        await mongoose.connect(keys.mongoURI, {
+        await mongoose.connect('mongodb+srv://janadmin96:YPsB6dRV8nuD@cluster0.vmdb8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
             useNewUrlParser: true,
         })
     } catch (err) {
