@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import { ApolloServer } from 'apollo-server-express';
 
-import graphQlSchema from './models/schemas';
+import graphQlSchema from './schemas';
 
 const server = (async () => {
     const app = express();

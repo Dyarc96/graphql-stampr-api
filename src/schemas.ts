@@ -1,19 +1,19 @@
 import { SchemaComposer } from 'graphql-compose';
-import { userQuery, userMutation } from './user';
-import { orgQuery, localQuery, localMutation, orgMutation } from './organization';
+import { userMutation } from './user/resolvers';
+import { userQuery } from "./user/query";
+import { orgMutation } from './organization/resolvers';
+import { orgQuery } from "./organization/query";
 
 const schemaComposer = new SchemaComposer();
 
 schemaComposer.Query.addFields({
     ...userQuery,
     ...orgQuery,
-    ...localQuery
 });
 
 schemaComposer.Mutation.addFields({
     ...userMutation,
     ...orgMutation,
-    ...localMutation
 })
 
 const graphqlSchema = schemaComposer.buildSchema()
